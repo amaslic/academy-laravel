@@ -7,7 +7,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         Affiliates
-                        <a href="#" class="btn btn-success pull-right">Add Affiliate</a>
+                        <a href="{{ route('affiliates.create') }}" class="btn btn-success pull-right">Add Affiliate</a>
                         <div class="clearfix"></div>
                     </div>
 
@@ -40,8 +40,11 @@
                                     <td>{{ $affiliate->invites_left }}</td>
                                     <td>{{ $affiliate->created_at }}</td>
                                     <td>
-                                        <a href="#" class="btn btn-primary">Edit</a>
-                                        <a href="#" class="btn btn-danger">x</a>
+                                        <a href="{{ route('affiliates.edit',$affiliate->id) }}" class="btn btn-primary">Edit</a>
+
+                                        {!! Form::open(['method' => 'DELETE', 'route' => ['affiliates.destroy', $affiliate->id], 'style' => 'display: inline']) !!}
+                                            <button type="submit" href="#" class="btn btn-danger">x</button>
+                                        {!! Form::close() !!}
                                     </td>
                                 </tr>
                             @endforeach

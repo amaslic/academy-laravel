@@ -31,7 +31,7 @@ class AffiliaterController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard/affiliates.add');
     }
 
     /**
@@ -42,7 +42,17 @@ class AffiliaterController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+            'invites_left' => 'required',
+            'thrivecart_affiliate_id' => 'required',
+        ]);
+
+        Affiliate::create($request->all());
+
+        return redirect()->route('affiliates.index');
     }
 
     /**
@@ -64,7 +74,8 @@ class AffiliaterController extends Controller
      */
     public function edit($id)
     {
-        //
+        $affiliate = Affiliate::find($id);
+        return view('dashboard/affiliates.edit', compact('affiliate'));
     }
 
     /**
@@ -76,7 +87,17 @@ class AffiliaterController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $this->validate($request, [
+            'first_name' => 'required',
+            'last_name' => 'required',
+            'email' => 'required',
+            'invites_left' => 'required',
+            'thrivecart_affiliate_id' => 'required',
+        ]);
+
+        Affiliate::find($id)->update($request->all());
+
+        return redirect()->route('affiliates.index');
     }
 
     /**
@@ -87,6 +108,7 @@ class AffiliaterController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Affiliate::find($id)->delete();
+        return redirect()->route('affiliates.index');
     }
 }
