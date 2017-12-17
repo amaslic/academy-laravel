@@ -21,7 +21,7 @@ return [
     |
     | This value determines the "environment" your application is currently
     | running in. This may determine how you prefer to configure various
-    | services your application utilizes. Set this in your ".env" file.
+    | services your application utilizes. Set this in your ".env.example1" file.
     |
     */
 
@@ -38,7 +38,7 @@ return [
     |
     */
 
-    'debug' => env('APP_DEBUG', false),
+    'debug' => env('APP_DEBUG', true),
 
     /*
     |--------------------------------------------------------------------------
@@ -51,7 +51,7 @@ return [
     |
     */
 
-    'url' => env('APP_URL', 'http://localhost'),
+    'url' => env('APP_URL', 'http://artisan.lh'),
 
     /*
     |--------------------------------------------------------------------------
