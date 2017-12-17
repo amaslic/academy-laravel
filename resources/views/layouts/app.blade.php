@@ -48,8 +48,8 @@
                         @else
                             @if (Auth::user()->hasRole('admin'))
                                 <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
-                                <li><a href="{{ route('affiliates') }}">Affiliates</a></li>
-                                <li><a href="{{ route('coupons') }}">Coupons</a></li>
+                                <li><a href="{{ url('/affiliates') }}">Affiliates</a></li>
+                                <li><a href="{{ url('/coupons') }}">Coupons</a></li>
                             @endif
 
                             <li class="dropdown">

@@ -33,6 +33,7 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 
-Route::get('/affiliates', 'AffiliatesController@index')->name('affiliates');
-
-Route::get('/coupons', 'CouponsController@index')->name('coupons');
+Route::resources([
+    '/affiliates' => 'AffiliaterController',
+    '/coupons' => 'CouponController',
+]);
