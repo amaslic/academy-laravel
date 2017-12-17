@@ -70,9 +70,6 @@
                 <div class="top-right links">
                     @if (Auth::check())
                         <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ url('/login') }}">Login</a>
-                        {{--<a href="{{ url('/register') }}">Register</a>--}}
                     @endif
                 </div>
             @endif
@@ -84,12 +81,14 @@
 
                 <div class="links">
                     <a href="{{ route('kkic') }}">KKIC</a>
-
                 </div>
 
-                  <div class="links">
+                <div class="links">
                     <a href="{{ route('invites') }}">All Invites</a>
-
+                </div>
+                
+                <div class="links">
+                    <a href="{{ route('login') }}">Login</a>
                 </div>
             </div>
         </div>
