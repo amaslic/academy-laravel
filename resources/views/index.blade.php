@@ -86,7 +86,7 @@
                 <div class="links">
                     <a href="{{ route('invites') }}">All Invites</a>
                 </div>
-                
+
                 <div class="links">
                     <a href="{{ route('login') }}">Login</a>
                 </div>
