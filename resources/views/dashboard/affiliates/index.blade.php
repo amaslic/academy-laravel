@@ -47,6 +47,7 @@
                             @endforeach
                             </tbody>
                         </table>
+                        {!! $affiliates->render() !!}
                     </div>
                 </div>
             </div>

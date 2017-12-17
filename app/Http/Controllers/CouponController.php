@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Coupon;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
@@ -17,11 +18,13 @@ class CouponController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard/coupons.index');
+        $coupons = Coupon::orderBy('id', 'desc')->paginate(10);
+        return view('dashboard/coupons.index', compact('coupons'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
@@ -31,7 +34,7 @@ class CouponController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard/coupons.add');
     }
 
     /**
@@ -42,7 +45,11 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request, ['code' => 'required']);
+
+        Coupon::create($request->all());
+
+        return redirect()->route('coupons.index');
     }
 
     /**
@@ -87,6 +94,7 @@ class CouponController extends Controller
      */
     public function destroy($id)
     {
-        //
+        Coupon::find($id)->delete();
+        return redirect()->route('coupons.index');
     }
 }

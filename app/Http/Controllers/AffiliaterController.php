@@ -15,13 +15,13 @@ class AffiliaterController extends Controller
     /**
      * Display a listing of the resource.
      *
+     * @param Request $request
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        return view('dashboard/affiliates.index', [
-            'affiliates'=> Affiliate::all(),
-        ]);
+        $affiliates = Affiliate::orderBy('id', 'desc')->paginate(10);
+        return view('dashboard/affiliates.index', compact('affiliates'))->with('i', ($request->input('page', 1) - 1) * 10);
     }
 
     /**
