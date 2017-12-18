@@ -9,6 +9,8 @@ use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
+    public $user;
+
     /**
      * Create a new controller instance.
      *
@@ -16,7 +18,11 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::user();
+
+            return $next($request);
+        });
     }
 
     /**
@@ -26,8 +32,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $user = Auth::user();
-        if ($user->hasRole('admin')) return redirect()->route('dashboard');
+        if ($this->user->hasRole('admin')) return redirect()->route('dashboard');
 
         return view('home');
     }

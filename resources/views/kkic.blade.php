@@ -1,146 +1,87 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app')
 
-        <title>Laravel</title>
+@section('content')
+    <div class="container">
+        <div class="row">
+            <div class="col-md-8 col-md-offset-2">
+                <div class="panel panel-default">
+                    <div class="panel-heading">Send Invite</div>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+                    <div class="panel-body">
+                        @if (session('status'))
+                            <div class="alert alert-success">
+                                {{ session('status') }}
+                            </div>
+                        @endif
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: black;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+                        <div class="col-sm-12">
+                            @if(Session::has('message'))
+                                <div class="alert alert-success">
+                                    {{Session::get('message')}}
+                                </div>
+                            @elseif($errors->count()>0)
+                                <div class="alert alert-danger">
+                                    @foreach($errors->all() as $error)
+                                        {{ $error }}
+                                    @endforeach
+                                </div>
+                            @elseif(Session::has('error'))
+                                <div class="alert alert-danger">
+                                    {{Session::get('error')}}
+                                </div>
+                            @endif
 
-            .full-height {
-                height: 100vh;
-            }
+                            {!! Form::model($affiliate,['action' => 'KkicController@store' , 'class' => 'form-horizontal form-label-left']) !!}
 
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
+                            <center><h3>Your Details</h3><br></center>
 
-            .position-ref {
-                position: relative;
-            }
+                            <div class="form-group">
+                                <label >Affiliate Id</label>
+                                {!! Form::text('affiliate_id','',['required','class' => 'form-control']) !!}
+                            </div>
+                            <div class="form-group">
+                                <label >First Name</label>
+                                {!! Form::text('affiliate_fname','',['required','class' => 'form-control']) !!}
 
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
+                            </div>
+                            <div class="form-group">
+                                <label >Last Name</label>
+                                {!! Form::text('affiliate_lname','',['required','class' => 'form-control']) !!}
 
-            .content {
-                text-align: center;
-            }
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                {!! Form::text('affiliate_email','',['required','class' => 'form-control']) !!}
 
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: black;
-                padding: 0 25px;
-                font-size: 20px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-
-            label {
-              padding : 20px;
-            }
-
-            input {
-              margin-bottom : 15px;
-            }
-
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-        <div class="content">
-             {!! Form::model($affiliate,['action' => 'KkicController@store' , 'class' => 'form-horizontal form-label-left']) !!}
-
-<h3>Your Details</h3> 
-
-  <div class="form-group col-">
-    <label >Affiliate Id</label>
-     {!! Form::text('affiliate_id','',['required','class' => 'form-control']) !!}
-  </div>
-   <div class="form-group">
-    <label >First Name</label>
-   {!! Form::text('affiliate_fname','',['required','class' => 'form-control']) !!}
-
-  </div>
-   <div class="form-group">
-    <label >Last Name</label>
-  {!! Form::text('affiliate_lname','',['required','class' => 'form-control']) !!}
-
-  </div>
-  <div class="form-group">
-    <label>Email</label>
-  {!! Form::text('affiliate_email','',['required','class' => 'form-control']) !!}
-  
-  </div>
+                            </div>
 
 
-<h3>Your Friend</h3>
+                            <center><h3><br>Your Friend<br><br></h3></center>
 
 
-   <div class="form-group">
-    <label >First Name</label>
-  {!! Form::text('friend_fname','',['required','class' => 'form-control']) !!}
-  </div>
-   <div class="form-group">
-    <label >Last Name</label>
-    {!! Form::text('friend_lname','',['required','class' => 'form-control']) !!}
-  </div>
-  <div class="form-group">
-    <label>Email</label>
-    {!! Form::text('friend_email','',['required','class' => 'form-control']) !!}
-  </div>
+                            <div class="form-group">
+                                <label >First Name</label>
+                                {!! Form::text('friend_fname','',['required','class' => 'form-control']) !!}
+                            </div>
+                            <div class="form-group">
+                                <label >Last Name</label>
+                                {!! Form::text('friend_lname','',['required','class' => 'form-control']) !!}
+                            </div>
+                            <div class="form-group">
+                                <label>Email</label>
+                                {!! Form::text('friend_email','',['required','class' => 'form-control']) !!}
+                            </div>
 
+                            <center>
+                                <a class="btn btn-danger" href="{{ route('home') }}">Back</a>
+                                <button type="submit" class="btn btn-default">Send Invite</button>
+                            </center>
 
-<a href="{{ route('home') }}">Back</a>
-  <button type="submit" class="btn btn-default">Send Invite</button>
-
-</form>
-
-  @if(Session::has('message'))
-                        <div class="alert alert-success">
-                          {{Session::get('message')}}
+                            </form>
                         </div>
-                    @elseif($errors->count()>0)
-                        <div class="alert alert-danger">
-                            @foreach($errors->all() as $error)
-                            {{ $error }}
-                            <br/>
-                            @endforeach
-                        </div>
-                    @elseif(Session::has('error'))
-                        <div class="alert alert-danger">
-                            {{Session::get('error')}}
-                        </div>
-                    @endif      
-</div>
+                    </div>
+                </div>
+            </div>
         </div>
-    </body>
-</html>
-
-
+    </div>
+@endsection

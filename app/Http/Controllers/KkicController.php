@@ -5,19 +5,36 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\AddInvite;
+use Illuminate\Support\Facades\Auth;
 
 
 class KkicController extends Controller
 {
+    private $user;
+
+    public function __construct()
+    {
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::user();
+
+            return $next($request);
+        });
+    }
+
 	public function create()
     {
+        if (!$this->user)
+            return redirect()->to('/');
+
     	$affiliate = new \App\Affiliate;
     	return view('kkic',['affiliate'=>$affiliate]);
     }
 
     public function store(AddInvite $request)
     {
-  
+        if (!$this->user)
+            return redirect()->to('/');
+
     	$affiliate_id = $request->get('affiliate_id');
     	
   		//check if affiliate exist, if not create new
@@ -104,6 +121,9 @@ class KkicController extends Controller
 
     public function redeem()
     {
+        if (!$this->user)
+            return redirect()->to('/');
+
     	return "in redeem";
     }
 }

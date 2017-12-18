@@ -10,9 +10,18 @@ use Illuminate\Support\Facades\Auth;
 
 class CouponController extends Controller
 {
+    private $user;
+
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::user();
+
+            if (!$this->user->hasRole('admin'))
+                return response('Access Denied', 403);
+
+            return $next($request);
+        });
     }
 
     /**

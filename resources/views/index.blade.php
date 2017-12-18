@@ -69,7 +69,7 @@
             @if (Route::has('login'))
                 <div class="top-right links">
                     @if (Auth::check())
-                        <a href="{{ url('/home') }}">Home</a>
+                        <a href="{{ url('/home') }}">To Dashboard</a>
                     @endif
                 </div>
             @endif
@@ -80,16 +80,14 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{ route('kkic') }}">KKIC</a>
-                </div>
-
-                <div class="links">
                     <a href="{{ route('invites') }}">All Invites</a>
                 </div>
 
-                <div class="links">
-                    <a href="{{ route('login') }}">Login</a>
-                </div>
+                @if (!Auth::check())
+                    <div class="links">
+                        <a href="{{ route('login') }}">Login</a>
+                    </div>
+                @endif
             </div>
         </div>
     </body>

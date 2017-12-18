@@ -4,12 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Affiliate;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AffiliaterController extends Controller
 {
+    private $user;
+
     public function __construct()
     {
-        $this->middleware('auth');
+        $this->middleware(function ($request, $next) {
+            $this->user = Auth::user();
+
+            if (!$this->user->hasRole('admin'))
+                return response('Access Denied', 403);
+
+            return $next($request);
+        });
     }
 
     /**
