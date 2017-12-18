@@ -26,7 +26,7 @@ class KkicController extends Controller
 
 	public function create()
     {
-        if (!$this->user->hasRole('affiliate'))
+        if (!$this->user->hasRole('affiliator'))
             return redirect()->to('/');
 
     	return view('kkic', [
@@ -36,7 +36,7 @@ class KkicController extends Controller
 
     public function store(AddInvite $request)
     {
-        if (!$this->user->hasRole('affiliate'))
+        if (!$this->user->hasRole('affiliator'))
             return redirect()->to('/');
 
     	$affiliate_id = $request->get('affiliate_id');
@@ -86,7 +86,7 @@ class KkicController extends Controller
 
     public function redeem()
     {
-        if (!$this->user->hasRole('affiliate'))
+        if (!$this->user->hasRole('affiliator'))
             return redirect()->to('/');
 
     	return "in redeem";

@@ -53,7 +53,7 @@
                                 <li><a href="{{ url('/coupons') }}">Coupons</a></li>
                             @endif
 
-                            @if (Auth::user()->hasRole('affiliate'))
+                            @if (Auth::user()->hasRole('affiliator'))
                                 <li><a href="{{ route('kkic') }}">Send Invite</a></li>
                                 <li><a href="{{ route('invites') }}">All Invites</a></li>
                             @endif
