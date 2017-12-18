@@ -26,7 +26,7 @@ class KkicController extends Controller
 
 	public function create()
     {
-        if (!$this->user)
+        if (!$this->user->hasRole('affiliate'))
             return redirect()->to('/');
 
     	return view('kkic', [
@@ -36,7 +36,7 @@ class KkicController extends Controller
 
     public function store(AddInvite $request)
     {
-        if (!$this->user)
+        if (!$this->user->hasRole('affiliate'))
             return redirect()->to('/');
 
     	$affiliate_id = $request->get('affiliate_id');
@@ -61,7 +61,7 @@ class KkicController extends Controller
 
         $coupon = Coupon::where('has_been_used','!','false')->first();
 
-        $invite = new \App\Invite;
+        $invite = new \App\Invite();
         $invite->affiliate_id = $affiliate->id;
         $invite->friend_id = $friend->id;
         $invite->coupon = $coupon->code;
@@ -86,7 +86,7 @@ class KkicController extends Controller
 
     public function redeem()
     {
-        if (!$this->user)
+        if (!$this->user->hasRole('affiliate'))
             return redirect()->to('/');
 
     	return "in redeem";
