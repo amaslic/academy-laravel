@@ -33,6 +33,8 @@ class KkicController extends Controller
             'cookie_lifetime' => 8640000,
         ]);
 
+        if (!$this->user && !isset($_SESSION['uid'])) die('Denied.');
+
         $data = [
            'uid' => $_SESSION['uid'] ?? false,
            'aff_id' => $_SESSION['aff_id'] ?? false,
