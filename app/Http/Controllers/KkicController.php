@@ -33,7 +33,7 @@ class KkicController extends Controller
             'cookie_lifetime' => 8640000,
         ]);
 
-        if (!$this->user && !isset($_SESSION['uid'])) die('Denied.');
+        if (!$this->user && !isset($_COOKIE['AUTH_ID']) && empty($_COOKIE['AUTH_ID'])) die('Denied.');
 
         $data = [
            'uid' => $_SESSION['uid'] ?? false,
@@ -51,6 +51,16 @@ class KkicController extends Controller
 
     public function store(AddInvite $request)
     {
+        $this->validate($request, [
+            'affiliate_id' => 'required',
+            'affiliate_fname' => 'required',
+            'affiliate_lname' => 'required',
+            'affiliate_email' => 'required',
+            'friend_fname' => 'required',
+            'friend_lname' => 'required',
+            'friend_email' => 'required',
+        ]);
+
     	$email = $request->get('affiliate_email');
 		$affiliate = Affiliate::where('email', $email)->first();
 
@@ -157,6 +167,22 @@ class KkicController extends Controller
         if(!$whoishe) die('Denied.');
 
         return view('emails.follow', [
+            'affiliate' => $whoishe->toArray(),
+            'friend' => $whoami,
+        ]);
+    }
+
+    public function order($id)
+    {
+        $whoami = (new Friend())->find($id);
+
+        if(!$whoami) die('Denied.');
+        $whoami = $whoami->toArray();
+        $whoishe = (new Affiliate())->find($whoami['affiliate_id']);
+
+        if(!$whoishe) die('Denied.');
+
+        return view('emails.order', [
             'affiliate' => $whoishe->toArray(),
             'friend' => $whoami,
         ]);

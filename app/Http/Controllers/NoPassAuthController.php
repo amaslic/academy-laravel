@@ -14,6 +14,12 @@ class NoPassAuthController extends Controller
 {
     public function index()
     {
+        session_start([
+            'cookie_lifetime' => 8640000,
+        ]);
+
+        if (isset($_COOKIE['AUTH_ID']) && !empty($_COOKIE['AUTH_ID'])) return redirect()->route('kkic');
+
         return view('auth.nopass');
     }
 
@@ -42,6 +48,17 @@ class NoPassAuthController extends Controller
         $_SESSION['fname'] = $data['first_name'];
         $_SESSION['lname'] = $data['last_name'];
 
+        setcookie("AUTH_ID", $data['id'], time() + 8640000, "/");
+
         return redirect()->route('kkic');
+    }
+
+    public function logout()
+    {
+        setcookie("AUTH_ID", "", time() - 3600, "/");
+
+        $_SESSION = $_COOKIE = '';
+
+        return redirect('/');
     }
 }

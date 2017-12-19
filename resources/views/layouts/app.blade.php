@@ -33,7 +33,7 @@
                     </a>
                 </div>
 
-                <div class="collapse navbar-collapse" id="app-navbar-collapse">
+                <li class="collapse navbar-collapse" id="app-navbar-collapse">
                     <!-- Left Side Of Navbar -->
                     <ul class="nav navbar-nav">
                         &nbsp;
@@ -78,6 +78,10 @@
                                 </ul>
                             </li>
                         @endif
+
+                        @if (isset($_COOKIE['AUTH_ID']) || !empty($_COOKIE['AUTH_ID']))
+                            <li><a href="{{ url('/kkic/logout') }}">Logout</a></li>
+                        @endif;
                     </ul>
                 </div>
             </div>

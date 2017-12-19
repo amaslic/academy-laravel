@@ -60,7 +60,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                {!! Form::text('affiliate_email',$data['email'],['required','class' => 'form-control']) !!}
+                                {!! Form::email('affiliate_email',$data['email'],['required','class' => 'form-control']) !!}
 
                             </div>
 
@@ -78,7 +78,7 @@
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                {!! Form::text('friend_email','',['required','class' => 'form-control']) !!}
+                                {!! Form::email('friend_email','',['required','class' => 'form-control']) !!}
                             </div>
 
                             <center>

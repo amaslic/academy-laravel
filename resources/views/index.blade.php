@@ -79,15 +79,19 @@
                     Internet Marketing
                 </div>
 
+                @if (isset($_COOKIE['AUTH_ID']) || !empty($_COOKIE['AUTH_ID']))
                 <div class="links">
                     <a href="{{ route('kkic') }}">KKIC</a>
                 </div>
+                @endif
 
                 @if (Auth::guest())
-                    <div class="links">
-                        <a href="{{ route('nopassauth') }}">Affilate Login</a>
-                        {{--<a href="{{ route('login') }}">Login</a>--}}
-                    </div>
+                    @if (!isset($_COOKIE['AUTH_ID']) || empty($_COOKIE['AUTH_ID']))
+                        <div class="links">
+                            <a href="{{ route('nopassauth') }}">Affilate Login</a>
+                            {{--<a href="{{ route('login') }}">Login</a>--}}
+                        </div>
+                    @endif;
                 @endif
             </div>
         </div>
