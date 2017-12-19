@@ -20,7 +20,7 @@ Route::get('kkic', 'KkicController@create')->name('kkic');
 
 Route::post('kkic', 'KkicController@store')->name('kkicstore');
 
-Route::get('kkic/invites', 'KkicController@invites')->name('invites');
+Route::get('kkic/invites/{id}', 'KkicController@invites')->name('invites');
 
 Route::get('kkic/invites/redeem/{affiliate}/{coupon}', 'KkicController@redeem')->name('redeem');
 
@@ -30,6 +30,9 @@ Route::get('kkic/invites/redeem/{affiliate}/{coupon}', 'KkicController@redeem')-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('/auth', 'NoPassAuthController@index')->name('nopassauth');
+Route::post('/auth', 'NoPassAuthController@auth')->name('nopassauth');
 
 Route::get('/dashboard', 'DashboardController@index')->name('dashboard');
 

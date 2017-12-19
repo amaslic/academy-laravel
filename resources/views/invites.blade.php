@@ -75,18 +75,20 @@
     <body>
         <div class="flex-center position-ref full-height">
         <div class="content">
-        @foreach($invites as $invite)
-        <div>
-        <h3>Looks Like {{ $invite->affiliates[0]->first_name }} invited you , {{ $invite->first_name }}</h3>
-        <img src = "" width="200"><p>
+        @if($invites && count($invites) > 0)
+            @foreach($invites as $invite)
+            <div>
+            <h3>Friend name: {{ $invite->first_name }}</h3>
 
-        {{ $invite->affiliates[0]->first_name }} gave you a $1000 discout ... You get in for only $100/month.
-</p>
-        <a href="{{ route('redeem',[$invite->affiliates[0]->thrivecart_affiliate_id , $invite->affiliates[0]->pivot->coupon])}}"><button type="button">I want It </button></a> <button type="button">I Want More Info</button>
-        </div>
-        <hr/>
-        @endforeach
-
+                Friend email: {{ $invite->email }}<br><br>
+                <strong>Has ordered: {{ $invite->has_ordered > 0 ? 'yes' : 'no' }}</strong>
+            </p>
+           </div>
+            <hr/>
+            @endforeach
+        @else
+            <h3>You haven't invited friends.</h3>
+        @endif
         </div>
         </div>
     </body>

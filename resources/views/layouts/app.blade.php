@@ -43,7 +43,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <!-- Authentication Links -->
                         @if (Auth::guest())
-                            <li><a href="{{ route('login') }}">Login</a></li>
+                            {{--<li><a href="{{ route('login') }}">Login</a></li>--}}
                             {{--<li><a href="{{ route('register') }}">Register</a></li>--}}
                         @else
                             <li><a href="{{ route('dashboard') }}">Dashboard</a></li>
@@ -53,7 +53,7 @@
                                 <li><a href="{{ url('/coupons') }}">Coupons</a></li>
                             @endif
 
-                            @if (Auth::user()->hasRole('affiliator'))
+                            @if (Auth::user()->hasRole('affiliate'))
                                 <li><a href="{{ route('kkic') }}">Send Invite</a></li>
                                 <li><a href="{{ route('invites') }}">All Invites</a></li>
                             @endif

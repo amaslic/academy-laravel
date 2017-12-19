@@ -80,12 +80,13 @@
                 </div>
 
                 <div class="links">
-                    <a href="{{ route('invites') }}">All Invites</a>
+                    <a href="{{ route('kkic') }}">KKIC</a>
                 </div>
 
-                @if (!Auth::check())
+                @if (Auth::guest())
                     <div class="links">
-                        <a href="{{ route('login') }}">Login</a>
+                        <a href="{{ route('nopassauth') }}">Affilate Login</a>
+                        {{--<a href="{{ route('login') }}">Login</a>--}}
                     </div>
                 @endif
             </div>

@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\AddInvite;
 use Illuminate\Support\Facades\Auth;
+use Mockery\Exception;
 
 
 class KkicController extends Controller
@@ -26,30 +27,44 @@ class KkicController extends Controller
 
 	public function create()
     {
-        if (!$this->user->hasRole('affiliator'))
-            return redirect()->to('/');
+        session_start([
+            'cookie_lifetime' => 8640000,
+        ]);
+
+        $data = [
+           'uid' => $_SESSION['uid'] ?? false,
+           'aff_id' => $_SESSION['aff_id'] ?? false,
+           'email' => $_SESSION['email'] ?? false,
+           'fname' => $_SESSION['fname'] ?? false,
+           'lname' => $_SESSION['lname'] ?? false,
+        ];
 
     	return view('kkic', [
     	    'affiliate' => new \App\Affiliate,
+            'data' => $data,
         ]);
     }
 
     public function store(AddInvite $request)
     {
-        if (!$this->user->hasRole('affiliator'))
-            return redirect()->to('/');
-
-    	$affiliate_id = $request->get('affiliate_id');
-		$affiliate = Affiliate::where('thrivecart_affiliate_id', $affiliate_id)->first();
+    	$email = $request->get('affiliate_email');
+		$affiliate = Affiliate::where('email', $email)->first();
 
     	if(!$affiliate) {
     	    $affiliate = new \App\Affiliate;
+            $affiliate->invites_left = 3;
         }
 
         $affiliate->thrivecart_affiliate_id	 = $request->get('affiliate_id');
         $affiliate->email = $request->get('affiliate_email');
         $affiliate->first_name = $request->get('affiliate_fname');
         $affiliate->last_name = $request->get('affiliate_lname');
+        $affiliate->save();
+
+        if ($affiliate->invites_left <= 0)
+            return redirect()->route('kkic')->with('error', 'You have reached invitation limit!');
+
+        $affiliate->invites_left--;
         $affiliate->save();
 
         $friend = new \App\Friend;
@@ -73,22 +88,26 @@ class KkicController extends Controller
             $coupon->save();
         }
 
-        return redirect()->route('kkic')->with('message', 'Invite Sent Successfully');
+        return redirect()->route('kkic')
+            ->with('message', 'Invite Sent Successfully!')
+            ->with('uid', $affiliate->id)
+            ->with('email', $affiliate->email)
+            ->with('affid', $affiliate->thrivecart_affiliate_id)
+            ->with('balance', $affiliate->invites_left);
 
     }
 
-    public function invites()
+    public function invites($id)
     {
-    	return view('invites', [
-    	    'invites' => Friend::with('affiliates')->get(),
+        $affiliate = (new Affiliate())->find($id);
+
+        return view('invites', [
+            'invites' => $affiliate ? $affiliate->friends()->get() : false,
         ]);
     }
 
     public function redeem()
     {
-        if (!$this->user->hasRole('affiliator'))
-            return redirect()->to('/');
-
     	return "in redeem";
     }
 }

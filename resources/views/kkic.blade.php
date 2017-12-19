@@ -17,7 +17,16 @@
                         <div class="col-sm-12">
                             @if(Session::has('message'))
                                 <div class="alert alert-success">
-                                    {{Session::get('message')}}
+                                    <strong>{{Session::get('message')}}</strong>
+                                    <br>You can check your invitations by link:
+                                    <a href="{{ url('/kkic/invites') }}/{{Session::get('uid')}}">{{ url('/kkic/invites') }}/{{Session::get('uid')}}</a>
+                                    <br>You have: {{Session::get('balance')}} invitation(s).
+                                </div>
+
+                                <div class="alert alert-warning">
+                                    <strong>Your login data:</strong><br>
+                                    E-Mail: {{Session::get('email')}}<br>
+                                    Affiliate ID: {{Session::get('affid')}}
                                 </div>
                             @elseif($errors->count()>0)
                                 <div class="alert alert-danger">
@@ -37,21 +46,21 @@
 
                             <div class="form-group">
                                 <label >Affiliate Id</label>
-                                {!! Form::text('affiliate_id','',['required','class' => 'form-control']) !!}
+                                {!! Form::text('affiliate_id',$data['aff_id'] ? $data['aff_id'] : rand(111111111,999999999),['required','class' => 'form-control']) !!}
                             </div>
                             <div class="form-group">
                                 <label >First Name</label>
-                                {!! Form::text('affiliate_fname','',['required','class' => 'form-control']) !!}
+                                {!! Form::text('affiliate_fname',$data['fname'],['required','class' => 'form-control']) !!}
 
                             </div>
                             <div class="form-group">
                                 <label >Last Name</label>
-                                {!! Form::text('affiliate_lname','',['required','class' => 'form-control']) !!}
+                                {!! Form::text('affiliate_lname',$data['lname'],['required','class' => 'form-control']) !!}
 
                             </div>
                             <div class="form-group">
                                 <label>Email</label>
-                                {!! Form::text('affiliate_email','',['required','class' => 'form-control']) !!}
+                                {!! Form::text('affiliate_email',$data['email'],['required','class' => 'form-control']) !!}
 
                             </div>
 
@@ -73,7 +82,7 @@
                             </div>
 
                             <center>
-                                <a class="btn btn-danger" href="{{ route('home') }}">Back</a>
+                                <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
                                 <button type="submit" class="btn btn-default">Send Invite</button>
                             </center>
 
