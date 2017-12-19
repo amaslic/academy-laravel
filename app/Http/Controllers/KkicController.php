@@ -53,12 +53,20 @@ class KkicController extends Controller
     {
         $this->validate($request, [
             'affiliate_id' => 'required',
-            'affiliate_fname' => 'required',
-            'affiliate_lname' => 'required',
-            'affiliate_email' => 'required',
-            'friend_fname' => 'required',
-            'friend_lname' => 'required',
-            'friend_email' => 'required',
+            'affiliate_fname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
+            'affiliate_lname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
+            'affiliate_email' => 'required|email',
+            'friend_fname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
+            'friend_lname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
+            'friend_email' => 'required|email',
+        ], [], [
+            'affiliate_fname' => 'Affiliate First Name',
+            'affiliate_lname' => 'Affiliate Last Name',
+            'affiliate_id' => 'Affiliate ID',
+            'affiliate_email' => 'Affiliate Email',
+            'friend_fname' => 'Friend Last Name',
+            'friend_lname' => 'Friend Last Name',
+            'friend_email' => 'Friend Email',
         ]);
 
     	$email = $request->get('affiliate_email');
