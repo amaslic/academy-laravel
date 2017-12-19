@@ -9,12 +9,14 @@ use Illuminate\Http\Request;
 
 use App\Http\Requests\AddInvite;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 use Mockery\Exception;
-
 
 class KkicController extends Controller
 {
     private $user;
+    private $affiliate;
+    private $friend;
 
     public function __construct()
     {
@@ -61,6 +63,13 @@ class KkicController extends Controller
         $affiliate->last_name = $request->get('affiliate_lname');
         $affiliate->save();
 
+        $this->affiliate = [
+            'id' => $affiliate->id,
+            'email' => $request->get('affiliate_email'),
+            'fname' => $request->get('affiliate_fname'),
+            'lname' => $request->get('affiliate_lname'),
+        ];
+
         if ($affiliate->invites_left <= 0)
             return redirect()->route('kkic')->with('error', 'You have reached invitation limit!');
 
@@ -73,6 +82,13 @@ class KkicController extends Controller
         $friend->last_name = $request->get('friend_lname');
         $friend->affiliate_id = $affiliate->id;
         $friend->save();
+
+        $this->friend = [
+            'id' => $friend->id,
+            'email' => $request->get('friend_email'),
+            'fname' => $request->get('friend_fname'),
+            'lname' => $request->get('friend_lname'),
+        ];
 
         $coupon = Coupon::where('has_been_used','!','false')->first();
 
@@ -87,6 +103,12 @@ class KkicController extends Controller
             $coupon->has_been_used = true;
             $coupon->save();
         }
+
+        Mail::send('emails.list', ['id' => $this->friend['id']], function($message)
+        {
+            $message->from('laravel@example.com', 'Invitation For '.$this->affiliate['fname'].' '.$this->affiliate['lname']);
+            $message->to($this->affiliate['email']);
+        });
 
         return redirect()->route('kkic')
             ->with('message', 'Invite Sent Successfully!')
@@ -103,6 +125,38 @@ class KkicController extends Controller
 
         return view('invites', [
             'invites' => $affiliate ? $affiliate->friends()->get() : false,
+        ]);
+    }
+
+    public function invitation($id)
+    {
+        $whoami = (new Friend())->find($id);
+
+        if(!$whoami) die('Denied.');
+        $whoami = $whoami->toArray();
+        $whoishe = (new Affiliate())->find($whoami['affiliate_id']);
+
+        if(!$whoishe) die('Denied.');
+
+        return view('emails.invite', [
+            'affiliate' => $whoishe->toArray(),
+            'friend' => $whoami,
+        ]);
+    }
+
+    public function follow($id)
+    {
+        $whoami = (new Friend())->find($id);
+
+        if(!$whoami) die('Denied.');
+        $whoami = $whoami->toArray();
+        $whoishe = (new Affiliate())->find($whoami['affiliate_id']);
+
+        if(!$whoishe) die('Denied.');
+
+        return view('emails.follow', [
+            'affiliate' => $whoishe->toArray(),
+            'friend' => $whoami,
         ]);
     }
 

@@ -22,6 +22,10 @@ Route::post('kkic', 'KkicController@store')->name('kkicstore');
 
 Route::get('kkic/invites/{id}', 'KkicController@invites')->name('invites');
 
+Route::get('kkic/invitation/{id}', 'KkicController@invitation')->name('invitation');
+
+Route::get('kkic/follow/{id}', 'KkicController@follow')->name('follow');
+
 Route::get('kkic/invites/redeem/{affiliate}/{coupon}', 'KkicController@redeem')->name('redeem');
 
 
