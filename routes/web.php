@@ -39,6 +39,8 @@ Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
+Route::post('/subscribe', 'HomeController@subscribe');
+
 Route::get('/auth', 'NoPassAuthController@index')->name('nopassauth');
 Route::post('/auth', 'NoPassAuthController@auth')->name('nopassauth');
 

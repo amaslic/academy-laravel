@@ -91,10 +91,11 @@
                 <br>
                 <br>
 
-                    <form class="form-inline">
+                    <form action="{{action('HomeController@subscribe')}}" method="POST" class="form-inline">
+                        {{csrf_field()}}
                         <div class="form-group">
                             <label for="email" class="sr-only">Email</label>
-                            <input type="email" class="form-control" id="email" placeholder="E-mail">
+                            <input type="email" name="email" class="form-control" id="email" placeholder="E-mail">
                         </div>
                         <button type="submit" class="btn btn-success">Subscribe</button>
                     </form>

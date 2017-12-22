@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Affiliate;
+use App\Http\Requests\SubscribeRequest;
 use App\User;
 use App\Role;
 use Illuminate\Http\Request;
@@ -35,5 +37,32 @@ class HomeController extends Controller
         if ($this->user->hasRole('admin')) return redirect()->route('dashboard');
 
         return view('home');
+    }
+
+    public function subscribe(SubscribeRequest $request){
+        $email = $request->input('email');
+
+        $isEmailExist = Affiliate::where('email', $email)
+            ->exists();
+
+        if($isEmailExist){
+            return redirect()->action('NoPassAuthController@index', ['email'=>$email]);
+        }else{
+            do{
+                $thrivecart_affiliate_id = rand(11111, 99999999);
+            }while(Affiliate::where('thrivecart_affiliate_id', $thrivecart_affiliate_id)->exists());
+
+            $affiliate = Affiliate::create([
+                'first_name'=> '',
+                'last_name'=> '',
+                'email' => $email,
+                'invites_left'=>3,
+                'thrivecart_affiliate_id'=>$thrivecart_affiliate_id,
+            ]);
+
+            $affiliate->loginNoPass();
+
+            return redirect()->route('kkic');
+        }
     }
 }
