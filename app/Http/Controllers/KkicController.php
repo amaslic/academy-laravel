@@ -35,6 +35,14 @@ class KkicController extends Controller
 
         if (!$this->user && !isset($_COOKIE['AUTH_ID']) && empty($_COOKIE['AUTH_ID'])) die('Denied.');
 
+        if (request()->has(['affiliateid', 'coupon'])) {
+            $affiliate = (new Affiliate())->find(request('affiliateid'));
+
+            return view('invites', [
+                'invites' => $affiliate ? $affiliate->friends()->get() : false,
+            ]);
+        }
+
         $data = [
            'uid' => $_SESSION['uid'] ?? false,
            'aff_id' => $_SESSION['aff_id'] ?? false,
@@ -133,6 +141,7 @@ class KkicController extends Controller
         return redirect()->route('kkic')
             ->with('message', 'Invite Sent Successfully!')
             ->with('uid', $affiliate->id)
+            ->with('coupon', $coupon->code)
             ->with('email', $affiliate->email)
             ->with('affid', $affiliate->thrivecart_affiliate_id)
             ->with('balance', $affiliate->invites_left);

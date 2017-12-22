@@ -44,7 +44,7 @@
                 </tr>
                 <tr>
                     <td>
-                        <h6 style="text-align:center;margin-top: 9px;">PUT FOOTER CONTENT HERE</h6>
+                        <h6 style="text-align:center;margin-top: 9px;">Copyright&copy;{{ date('Y') }} Internet Marketing</h6>
                     </td>
                 </tr>
             </table>
