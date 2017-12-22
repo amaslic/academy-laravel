@@ -42,7 +42,7 @@
 
                                 <div class="form-group">
                                     <strong>Email:</strong>
-                                    {!! Form::text('email', null, array('readonly','placeholder' => 'Email', 'class' => 'form-control')) !!}
+                                    {!! Form::text('email', null, array('placeholder' => 'Email', 'class' => 'form-control')) !!}
                                 </div>
 
                                 <div class="form-group">

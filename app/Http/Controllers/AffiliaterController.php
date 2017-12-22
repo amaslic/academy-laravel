@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Affiliate;
 use App\Helpers\StrHelper;
+use Illuminate\Validation\Rule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -116,7 +117,10 @@ class AffiliaterController extends Controller
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
+            'email' => [
+                'required',
+                Rule::unique('affiliates')->ignore($id),
+            ],
             'invites_left' => 'required',
             'thrivecart_affiliate_id' => 'required',
         ]);
