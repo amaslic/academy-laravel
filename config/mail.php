@@ -7,8 +7,8 @@ return array(
         "address" => "from@example.com",
         "name" => "Example"
     ),
-    "username" => "df7fe8c20709b6",
-    "password" => "bed1161e2bcef3",
+    "username" => "ecf9e3c274e7f5",
+    "password" => "8d64977dcc816b",
     "sendmail" => "/usr/sbin/sendmail -bs",
     "pretend" => false
 );
