@@ -35,14 +35,6 @@ class KkicController extends Controller
 
         if (!$this->user && !isset($_COOKIE['AUTH_ID']) && empty($_COOKIE['AUTH_ID'])) die('Denied.');
 
-        if (request()->has(['affiliateid', 'coupon'])) {
-            $affiliate = (new Affiliate())->find(request('affiliateid'));
-
-            return view('invites', [
-                'invites' => $affiliate ? $affiliate->friends()->get() : false,
-            ]);
-        }
-
         $data = [
            'uid' => $_SESSION['uid'] ?? false,
            'aff_id' => $_SESSION['aff_id'] ?? false,
@@ -148,9 +140,13 @@ class KkicController extends Controller
 
     }
 
-    public function invites($id)
+    public function invites()
     {
-        $affiliate = (new Affiliate())->find($id);
+        $affiliate = null;
+
+        if (request()->has(['affiliateid', 'coupon'])) {
+            $affiliate = (new Affiliate())->find(request('affiliateid'));
+        }
 
         return view('invites', [
             'invites' => $affiliate ? $affiliate->friends()->get() : false,

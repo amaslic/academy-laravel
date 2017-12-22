@@ -22,7 +22,7 @@ Route::get('kkic/logout', 'NoPassAuthController@logout')->name('kkiclogout');
 
 Route::post('kkic', 'KkicController@store')->name('kkicstore');
 
-Route::get('kkic/invites/{id}', 'KkicController@invites')->name('invites');
+Route::get('kkic/invites', 'KkicController@invites')->name('invites');
 
 Route::get('kkic/invitation/{id}', 'KkicController@invitation')->name('invitation');
 
