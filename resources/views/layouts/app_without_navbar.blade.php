@@ -11,7 +11,10 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Styles -->
+    @stack('styles')
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+
+    @stack('head')
 </head>
 <body>
     <div id="app">
