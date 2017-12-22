@@ -32,7 +32,7 @@
 
                         <br><br>
 
-                        <p>{{ $affiliate['first_name'] }} gave you a $100 discount...You get in for only <strike><b>$297</b></strike> <b>$197</b>/month</p>
+                        <p class="text-center">{{ $affiliate['first_name'] }} gave you a $100 discount...You get in for only <strike><b>$297</b></strike> <b>$197</b>/month</p>
 
                         <br><br>
                         <center>

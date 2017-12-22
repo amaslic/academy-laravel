@@ -32,7 +32,7 @@
                                 <tr>
                                     <th scope="row">{{ ($coupons->perPage() * ($coupons->currentPage() - 1)) + $loop->iteration }}</th>
                                     <td>{{ $coupon->code }}</td>
-                                    <td class="bg-warning text-center">{{ $coupon->has_been_used }}</td>
+                                    <td class="{{$coupon->has_been_used ? 'bg-success' : 'bg-danger' }} text-center">{{ $coupon->has_been_used }}</td>
                                     <td>
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['coupons.destroy', $coupon->id]]) !!}
                                             <button type="submit" href="#" class="btn btn-danger">x</button>

@@ -65,8 +65,8 @@ class AffiliaterController extends Controller
         $this->validate($request, [
             'first_name' => 'required',
             'last_name' => 'required',
-            'email' => 'required',
-            'invites_left' => 'required',
+            'email' => 'required|unique:affiliates,email',
+            'invites_left' => 'required|numeric|min:1',
             'thrivecart_affiliate_id' => 'required',
         ]);
 
