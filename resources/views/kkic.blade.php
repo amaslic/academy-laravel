@@ -30,7 +30,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <span>Send Invite</span>
-                        <a href="#" class="panel-heading-link pull-right">View Invitations</a>
+                        <a href="{{ route('invites', ['affiliateid'=> $data['aff_id'], 'coupon'=>'']) }}" class="panel-heading-link pull-right">View Invitations</a>
                     </div>
 
 

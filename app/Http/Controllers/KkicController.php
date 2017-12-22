@@ -146,7 +146,7 @@ class KkicController extends Controller
         $affiliate = null;
         $friends = new Collection();
 
-        if (request()->has(['affiliateid', 'coupon'])) {
+        if (request()->has(['affiliateid'])) {
             $affiliate = Affiliate::where('thrivecart_affiliate_id', request('affiliateid'))->first();
         }
 
