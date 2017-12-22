@@ -1,4 +1,4 @@
-1. git clone 
+1. git clone https://BIt-Coin@bitbucket.org/BIt-Coin/academy-1.git
 2. Laravel project install, (composer install)
 3. php artisan migrate
 4. php artisan db:seed
