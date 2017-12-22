@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Affiliate;
+use App\Helpers\StrHelper;
 use App\Http\Requests\SubscribeRequest;
 use App\User;
 use App\Role;
@@ -13,18 +14,22 @@ class HomeController extends Controller
 {
     public $user;
 
+    protected $strHelper;
+
     /**
      * Create a new controller instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct( StrHelper $strHelper)
     {
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
 
             return $next($request);
         });
+
+        $this->strHelper = $strHelper;
     }
 
     /**
@@ -49,7 +54,7 @@ class HomeController extends Controller
             return redirect()->action('NoPassAuthController@index', ['email'=>$email]);
         }else{
             do{
-                $thrivecart_affiliate_id = rand(11111, 99999999);
+                $thrivecart_affiliate_id = $this->strHelper->generateRandomString();
             }while(Affiliate::where('thrivecart_affiliate_id', $thrivecart_affiliate_id)->exists());
 
             $affiliate = Affiliate::create([
