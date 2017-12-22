@@ -127,8 +127,8 @@ class KkicController extends Controller
 
         Mail::send('emails.list', ['id' => $this->friend['id']], function($message)
         {
-            $message->from($this->affiliate['email'], $this->affiliate['fname'].' '.$this->affiliate['lname'].' ('.$this->affiliate['email'].')');
-            $message->to($this->friend['email'], $this->friend['fname'].' '.$this->friend['lname'].' ('.$this->friend['email'].')');
+            $message->from($this->affiliate['email'], $this->affiliate['fname'].' '.$this->affiliate['lname']);
+            $message->to($this->friend['email'], $this->friend['fname'].' '.$this->friend['lname']);
         });
 
         return redirect()->route('kkic')
