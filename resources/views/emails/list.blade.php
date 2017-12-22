@@ -11,7 +11,6 @@
                     <td valign="top" mc:edit="headerBrand" id="templateContainerHeader">
                         <h3 style="text-align: center !important;">KKIC Refer-A-Friend Program</h3>
                         <h4 style="text-align: center !important;">You are receiving One of only Three Invites I have...</h4>
-                        <h6 style="text-align:center;margin:0;padding:0;"><a href="VIEW IN BROWSER URL HERE" style="color:#3F4454">Is this email difficult to read? Click here to view it in your browser</a></h6>
                     </td>
                 </tr>
                 <tr>
@@ -20,11 +19,13 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateContainer">
                             <tr>
                                 <td valign="top" class="bodyContent" mc:edit="body_content">
-                                    <p>I recently joined a training program that helped me to to restart my marketing business and improve my life for the better.</p>
-                                    <p>I can invitee three people and I chose you as one of them.</p>
-                                    <p>If you join using my invitation you will receive a massive $100 discount.</p>
-                                    <p>Like I said when we chatted, the program changed my life and I think it might do the same for you...What if, right?</p>
-                                    <p>Click the button below to accept my invitation and learn more...</p>
+                                    <div style="border: 1px solid #e2e2e2; padding: 20px;">
+                                        <p>I recently joined a training program that helped me to to restart my marketing business and improve my life for the better.</p>
+                                        <p>I can invitee three people and I chose you as one of them.</p>
+                                        <p>If you join using my invitation you will receive a massive $100 discount.</p>
+                                        <p>Like I said when we chatted, the program changed my life and I think it might do the same for you...What if, right?</p>
+                                        <p>Click the button below to accept my invitation and learn more...</p>
+                                    </div>
 
                                     <br><br>
                                     <a href="{{ url('/kkic/invitation') }}/{{ $id }}" style="
