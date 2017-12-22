@@ -30,7 +30,7 @@ class NoPassAuthController extends Controller
         //'thrivecart_affiliate_id' => '43534',
 
         $affiliate = (new Affiliate())->where([
-            'email' => $request->get('email'),
+            'email' => strtolower($request->get('email')),
             'thrivecart_affiliate_id' => $request->get('aff_id'),
         ])->first();
 
