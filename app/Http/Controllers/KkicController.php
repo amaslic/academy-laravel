@@ -37,12 +37,19 @@ class KkicController extends Controller
         if (!$this->user && !isset($_COOKIE['AUTH_ID']) && empty($_COOKIE['AUTH_ID'])) die('Denied.');
 
         $data = [
-           'uid' => $_SESSION['uid'] ?? false,
-           'aff_id' => $_SESSION['aff_id'] ?? false,
-           'email' => $_SESSION['email'] ?? false,
-           'fname' => $_SESSION['fname'] ?? false,
-           'lname' => $_SESSION['lname'] ?? false,
+            'uid' => $_SESSION['uid'] ?? false,
+            'aff_id' => $_SESSION['aff_id'] ?? false,
+            'email' => $_SESSION['email'] ?? false,
+            'fname' => $_SESSION['fname'] ?? false,
+            'lname' => $_SESSION['lname'] ?? false,
         ];
+
+
+        $affiliate = Affiliate::find($_SESSION['uid']);
+        if( ! is_null($affiliate)){
+            $data['fname'] = $affiliate->first_name;
+            $data['lname'] = $affiliate->last_name;
+        }
 
     	return view('kkic', [
     	    'affiliate' => new \App\Affiliate,
