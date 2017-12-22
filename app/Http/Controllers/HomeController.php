@@ -47,7 +47,7 @@ class HomeController extends Controller
     public function subscribe(SubscribeRequest $request){
         $email = $request->input('email');
 
-        $isEmailExist = Affiliate::where('email', $email)
+        $isEmailExist = Affiliate::where('email', strtolower($email))
             ->exists();
 
         if($isEmailExist){
@@ -60,7 +60,7 @@ class HomeController extends Controller
             $affiliate = Affiliate::create([
                 'first_name'=> '',
                 'last_name'=> '',
-                'email' => $email,
+                'email' => strtolower($email),
                 'invites_left'=>3,
                 'thrivecart_affiliate_id'=>$thrivecart_affiliate_id,
             ]);

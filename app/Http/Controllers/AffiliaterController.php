@@ -70,7 +70,13 @@ class AffiliaterController extends Controller
             'thrivecart_affiliate_id' => 'required',
         ]);
 
-        Affiliate::create($request->all());
+        Affiliate::create([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => strtolower($request->input('email')),
+            'invites_left' => $request->input('invites_left'),
+            'thrivecart_affiliate_id' => $request->input('thrivecart_affiliate_id'),
+        ]);
 
         return redirect()->route('affiliates.index');
     }
@@ -115,7 +121,13 @@ class AffiliaterController extends Controller
             'thrivecart_affiliate_id' => 'required',
         ]);
 
-        Affiliate::find($id)->update($request->all());
+        Affiliate::find($id)->update([
+            'first_name' => $request->input('first_name'),
+            'last_name' => $request->input('last_name'),
+            'email' => strtolower($request->input('email')),
+            'invites_left' => $request->input('invites_left'),
+            'thrivecart_affiliate_id' => $request->input('thrivecart_affiliate_id'),
+        ]);
 
         return redirect()->route('affiliates.index');
     }
