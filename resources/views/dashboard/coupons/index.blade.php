@@ -23,16 +23,16 @@
                             <tr>
                                 <th>#</th>
                                 <th>Code</th>
-                                <th>Used</th>
+                                <th class="text-center">Used</th>
                                 <th>Actions</th>
                             </tr>
                             </thead>
                             <tbody>
                             @foreach($coupons as $coupon)
                                 <tr>
-                                    <th scope="row">{{ $coupon->id }}</th>
+                                    <th scope="row">{{ ($coupons->perPage() * ($coupons->currentPage() - 1)) + $loop->iteration }}</th>
                                     <td>{{ $coupon->code }}</td>
-                                    <td>{{ $coupon->has_been_used }}</td>
+                                    <td class="bg-warning text-center">{{ $coupon->has_been_used }}</td>
                                     <td>
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['coupons.destroy', $coupon->id]]) !!}
                                             <button type="submit" href="#" class="btn btn-danger">x</button>

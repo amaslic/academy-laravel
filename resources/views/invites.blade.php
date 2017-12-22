@@ -1,4 +1,4 @@
-@extends('layouts.app_without_navbar')
+@extends('layouts.app')
 
 @push('styles')
 <style>
