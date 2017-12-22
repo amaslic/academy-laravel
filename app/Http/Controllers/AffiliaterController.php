@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Affiliate;
+use App\Helpers\StrHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -10,7 +11,9 @@ class AffiliaterController extends Controller
 {
     private $user;
 
-    public function __construct()
+    protected $strHelper;
+
+    public function __construct(StrHelper $strHelper)
     {
         $this->middleware(function ($request, $next) {
             $this->user = Auth::user();
@@ -20,6 +23,8 @@ class AffiliaterController extends Controller
 
             return $next($request);
         });
+
+        $this->strHelper = $strHelper;
     }
 
     /**
@@ -41,7 +46,12 @@ class AffiliaterController extends Controller
      */
     public function create()
     {
-        return view('dashboard/affiliates.add');
+        do{
+            $thrivecart_affiliate_id = $this->strHelper->generateRandomString();
+        }while(Affiliate::where('thrivecart_affiliate_id', $thrivecart_affiliate_id)->exists());
+
+
+        return view('dashboard/affiliates.add', compact('thrivecart_affiliate_id'));
     }
 
     /**
