@@ -20,7 +20,13 @@
                         <table border="0" cellpadding="0" cellspacing="0" width="100%" id="templateContainer">
                             <tr>
                                 <td valign="top" class="bodyContent" mc:edit="body_content">
-                                    EMAIL CONTENT GOES HERE<br><br>
+                                    <p>I recently joined a training program that helped me to to restart my marketing business and improve my life for the better.</p>
+                                    <p>I can invitee three people and I chose you as one of them.</p>
+                                    <p>If you join using my invitation you will receive a massive $100 discount.</p>
+                                    <p>Like I said when we chatted, the program changed my life and I think it might do the same for you...What if, right?</p>
+                                    <p>Click the button below to accept my invitation and learn more...</p>
+
+                                    <br><br>
                                     <a href="{{ url('/kkic/invitation') }}/{{ $id }}" style="
     background: green;
     color: white;
