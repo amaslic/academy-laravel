@@ -20,7 +20,7 @@
             <div class="col-sm-8 col-sm-offset-2">
 
                 <div class="panel panel-default">
-                    <div class="panel-heading">Headline for Webinar</div>
+                    <div class="panel-heading"><b>Headline for Webinar</b></div>
 
                     <div class="panel-body">
 

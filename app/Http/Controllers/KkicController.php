@@ -8,6 +8,7 @@ use App\Friend;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\AddInvite;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Mockery\Exception;
@@ -143,13 +144,19 @@ class KkicController extends Controller
     public function invites()
     {
         $affiliate = null;
+        $friends = new Collection();
 
         if (request()->has(['affiliateid', 'coupon'])) {
-            $affiliate = (new Affiliate())->find(request('affiliateid'));
+            $affiliate = Affiliate::where('thrivecart_affiliate_id', request('affiliateid'))->first();
+        }
+
+        if( ! is_null($affiliate)){
+            $friends = $affiliate->friends()->get();
         }
 
         return view('invites', [
-            'invites' => $affiliate ? $affiliate->friends()->get() : false,
+            'affiliate' => $affiliate,
+            'friends' => $friends,
         ]);
     }
 

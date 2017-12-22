@@ -1,97 +1,24 @@
-<!doctype html>
-<html lang="{{ app()->getLocale() }}">
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.app_without_navbar')
 
-        <title>Laravel</title>
+@push('styles')
+<style>
 
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Raleway:100,600" rel="stylesheet" type="text/css">
+</style>
+@endpush
 
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: black;
-                font-weight: 100;
-                height: 100vh;
-                margin: 0;
-            }
+@section('content')
+    <div id="page_container" class="container">
 
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: black;
-                padding: 0 25px;
-                font-size: 20px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-
-            label {
-              padding : 20px;
-            }
-
-            input {
-              margin-bottom : 15px;
-            }
-
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-        <div class="content">
-        @if($invites && count($invites) > 0)
-            @foreach($invites as $invite)
-            <div>
-            <h3>Friend name: {{ $invite->first_name }}</h3>
-
-                Friend email: {{ $invite->email }}<br><br>
-                <strong>Has ordered: {{ $invite->has_ordered > 0 ? 'yes' : 'no' }}</strong>
-            </p>
-           </div>
-            <hr/>
-            @endforeach
-        @else
+        @if( $friends->isEmpty())
             <h3>You haven't invited friends.</h3>
+        @else
+            @foreach($friends as $friend)
+                <div class="row">
+                    <div class="col-sm-8 col-sm-offset-2">
+                        @include('layouts.invite_info')
+                    </div>
+                </div>
+            @endforeach
         @endif
-        </div>
-        </div>
-    </body>
-</html>
-
-
+    </div>
+@endsection
