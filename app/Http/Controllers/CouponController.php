@@ -32,8 +32,8 @@ class CouponController extends Controller
      */
     public function index(Request $request)
     {
-        $coupons = Coupon::orderBy('id', 'desc')->paginate(10);
-        return view('dashboard/coupons.index', compact('coupons'))->with('i', ($request->input('page', 1) - 1) * 10);
+        $coupons = Coupon::orderBy('id', 'desc')->get();
+        return view('dashboard/coupons.index', compact('coupons'));
     }
 
     /**
