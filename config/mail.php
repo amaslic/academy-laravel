@@ -1,6 +1,6 @@
 <?php
 return array(
-    "driver" => "smtp",
+    "driver" => env('MAIL_DRIVER', 'smtp'),
     "host" => "smtp.mailtrap.io",
     "port" => 2525,
     "from" => array(
