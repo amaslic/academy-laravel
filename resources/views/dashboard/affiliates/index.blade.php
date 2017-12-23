@@ -1,5 +1,30 @@
 @extends('layouts.app')
 
+@push('scripts')
+<script src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+<script>
+    $(document).ready(function(){
+        $('.table').DataTable(
+            {"columnDefs": [
+                { "orderable": false, "targets": 0 },
+                { "orderable": true, "targets": 1 },
+                { "orderable": true, "targets": 2 },
+                { "orderable": true, "targets": 3 },
+                { "orderable": true, "targets": 4 },
+                { "orderable": false, "targets": 5 },
+                { "orderable": true, "targets": 6 },
+                { "orderable": false, "targets": 7 },
+            ]
+        });
+    });
+</script>
+@endpush
+
+@push('styles')
+<link href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css" rel="stylesheet">
+@endpush
+
 @section('content')
     <div class="container">
         <div class="row">
@@ -34,7 +59,7 @@
                             <tbody>
                             @foreach($affiliates as $affiliate)
                                 <tr>
-                                    <th scope="row">{{ ($affiliates->perPage() * ($affiliates->currentPage() - 1)) + $loop->iteration }}</th>
+                                    <th scope="row">{{ $loop->iteration }}</th>
                                     <td>{{ $affiliate->first_name }}</td>
                                     <td>{{ $affiliate->last_name }}</td>
                                     <td>{{ $affiliate->email }}</td>
@@ -52,7 +77,6 @@
                             @endforeach
                             </tbody>
                         </table>
-                        {!! $affiliates->render() !!}
                     </div>
                 </div>
             </div>

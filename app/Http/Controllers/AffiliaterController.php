@@ -36,8 +36,8 @@ class AffiliaterController extends Controller
      */
     public function index(Request $request)
     {
-        $affiliates = Affiliate::orderBy('id', 'desc')->paginate(10);
-        return view('dashboard/affiliates.index', compact('affiliates'))->with('i', ($request->input('page', 1) - 1) * 10);
+        $affiliates = Affiliate::orderBy('id', 'desc')->get();
+        return view('dashboard/affiliates.index', compact('affiliates'));
     }
 
     /**
