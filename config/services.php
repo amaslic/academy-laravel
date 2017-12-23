@@ -15,8 +15,8 @@ return [
     */
 
     'mailgun' => [
-        'domain' => env('MAILGUN_DOMAIN'),
-        'secret' => env('MAILGUN_SECRET'),
+        'domain' => env('MAILGUN_DOMAIN', 'kimklaveracademy.com'),
+        'secret' => env('MAILGUN_SECRET', 'key-2f2f24eb3632c4d462d76e8f6f2de878'),
     ],
 
     'ses' => [
