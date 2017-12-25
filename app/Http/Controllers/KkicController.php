@@ -176,6 +176,11 @@ class KkicController extends Controller
     public function invitation($id)
     {
         $invite = Invite::find($id);
+
+        if(is_null($invite)){
+            throw new \Exception('Such invitation not found');
+        }
+
         $whoami = (new Friend())->find($id);
 
         if(!$whoami) die('Denied.');
