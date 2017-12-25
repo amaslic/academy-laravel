@@ -53,9 +53,10 @@ class HomeController extends Controller
         if($isEmailExist){
             return redirect()->action('NoPassAuthController@index', ['email'=>$email]);
         }else{
-            do{
-                $thrivecart_affiliate_id = $this->strHelper->generateRandomString();
-            }while(Affiliate::where('thrivecart_affiliate_id', $thrivecart_affiliate_id)->exists());
+            $thrivecart_affiliate_id = '';
+            //do{
+            //    $thrivecart_affiliate_id = $this->strHelper->generateRandomString();
+            //}while(Affiliate::where('thrivecart_affiliate_id', $thrivecart_affiliate_id)->exists());
 
             $affiliate = Affiliate::create([
                 'first_name'=> '',

@@ -76,7 +76,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" >Affiliate Id</label>
                                     <div class="col-sm-10">
-                                        {!! Form::text('affiliate_id',$data['aff_id'] ? $data['aff_id'] : rand(111111111,999999999),['required','readonly','class' => 'form-control']) !!}
+                                        {!! Form::text('affiliate_id', $data['aff_id'], ['required','class' => 'form-control']) !!}
                                     </div>
                                 </div>
                                 <div class="form-group">
