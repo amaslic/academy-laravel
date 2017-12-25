@@ -76,7 +76,12 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" >Affiliate Id</label>
                                     <div class="col-sm-10">
-                                        {!! Form::text('affiliate_id', $data['aff_id'], ['required','class' => 'form-control']) !!}
+                                        <input required="required"
+                                               name="affiliate_id"
+                                               @if(mb_strlen($data['aff_id']) > 0) readonly @endif
+                                               type="text"
+                                               value="{{$data['aff_id']}}"
+                                               class="form-control" >
                                     </div>
                                 </div>
                                 <div class="form-group">

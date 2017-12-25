@@ -60,7 +60,7 @@ class KkicController extends Controller
     public function store(AddInvite $request)
     {
         $this->validate($request, [
-            'affiliate_id' => 'required',
+            'affiliate_id' => 'required|unique:affiliates,thrivecart_affiliate_id',
             'affiliate_fname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
             'affiliate_lname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
             'affiliate_email' => 'required|email',
