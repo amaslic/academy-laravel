@@ -70,7 +70,7 @@
                                         <a href="{{ route('affiliates.edit',$affiliate->id) }}" class="btn btn-primary">Edit</a>
 
                                         {!! Form::open(['method' => 'DELETE', 'route' => ['affiliates.destroy', $affiliate->id], 'style' => 'display: inline']) !!}
-                                            <button type="submit" href="#" class="btn btn-danger">x</button>
+                                            <button type="submit" href="#" class="btn btn-danger">Delete</button>
                                         {!! Form::close() !!}
                                     </td>
                                 </tr>

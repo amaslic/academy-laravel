@@ -123,8 +123,7 @@
                                 </div>
 
                             <center>
-                                <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
-                                <button type="submit" class="btn btn-default">Send Invite</button>
+                                <button type="submit" class="btn btn-success">Send Invite</button>
                             </center>
 
                             </form>

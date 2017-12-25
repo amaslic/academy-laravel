@@ -52,7 +52,7 @@
 
                                 <div class="form-group">
                                     <strong>Thrivecart ID:</strong>
-                                    {!! Form::text('thrivecart_affiliate_id', $thrivecart_affiliate_id, array('readonly', 'placeholder' => 'Thrivecart ID', 'class' => 'form-control')) !!}
+                                    {!! Form::text('thrivecart_affiliate_id', null, array('placeholder' => 'Thrivecart ID', 'class' => 'form-control')) !!}                                    
                                 </div>
                             </div>
                             <div class="col-xs-12 col-sm-12 col-md-12 text-center">
