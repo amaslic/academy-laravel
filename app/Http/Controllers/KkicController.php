@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Affiliate;
 use App\Coupon;
 use App\Friend;
+use App\Invite;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
 
@@ -174,6 +175,7 @@ class KkicController extends Controller
 
     public function invitation($id)
     {
+        $invite = Invite::find($id);
         $whoami = (new Friend())->find($id);
 
         if(!$whoami) die('Denied.');
@@ -185,11 +187,13 @@ class KkicController extends Controller
         return view('emails.invite', [
             'affiliate' => $whoishe->toArray(),
             'friend' => $whoami,
+            'invite' => $invite,
         ]);
     }
 
     public function follow($id)
     {
+        $invite = Invite::find($id);
         $whoami = (new Friend())->find($id);
 
         if(!$whoami) die('Denied.');
@@ -201,12 +205,15 @@ class KkicController extends Controller
         return view('emails.follow', [
             'affiliate' => $whoishe->toArray(),
             'friend' => $whoami,
+            'invite' => $invite,
         ]);
     }
 
-    public function order($id)
+    public function order()
     {
-        $whoami = (new Friend())->find($id);
+        $invite = Invite::where('coupon', request('coupon'))->first();
+
+        $whoami = (new Friend())->find($invite->friend_id);
 
         if(!$whoami) die('Denied.');
         $whoami = $whoami->toArray();

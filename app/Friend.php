@@ -10,4 +10,9 @@ class Friend extends Model
     {
     	return $this->BelongsToMany('\App\Affiliate','invites','friend_id','affiliate_id')->withPivot('coupon');
     }
+
+    public function invite()
+    {
+        return $this->hasOne('App\Invite', 'friend_id');
+    }
 }
