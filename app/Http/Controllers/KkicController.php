@@ -203,7 +203,7 @@ class KkicController extends Controller
         if(is_null($invite)){
             throw new \Exception('Such invitation not found');
         }
-        
+
         $whoami = (new Friend())->find($id);
 
         if(!$whoami) die('Denied.');
