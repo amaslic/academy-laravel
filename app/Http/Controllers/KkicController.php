@@ -6,6 +6,7 @@ use App\Affiliate;
 use App\Coupon;
 use App\Friend;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 use App\Http\Requests\AddInvite;
 use Illuminate\Support\Collection;
@@ -44,6 +45,7 @@ class KkicController extends Controller
             'lname' => $_SESSION['lname'] ?? false,
         ];
 
+        session($data);
 
         $affiliate = Affiliate::find($_SESSION['uid']);
         if( ! is_null($affiliate)){
@@ -60,7 +62,10 @@ class KkicController extends Controller
     public function store(AddInvite $request)
     {
         $this->validate($request, [
-            'affiliate_id' => 'required|unique:affiliates,thrivecart_affiliate_id',
+            'affiliate_id' => [
+                'required',
+                Rule::unique('affiliates', 'thrivecart_affiliate_id')->ignore(session('uid'), 'id')
+            ],
             'affiliate_fname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
             'affiliate_lname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
             'affiliate_email' => 'required|email',
