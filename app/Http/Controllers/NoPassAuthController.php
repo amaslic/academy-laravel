@@ -30,25 +30,14 @@ class NoPassAuthController extends Controller
         //'thrivecart_affiliate_id' => '43534',
 
         $affiliate = (new Affiliate())->where([
-            'email' => $request->get('email'),
+            'email' => strtolower($request->get('email')),
             'thrivecart_affiliate_id' => $request->get('aff_id'),
         ])->first();
 
         if (!$affiliate)
             return view('auth.nopass')->with('auth', true);
 
-        $data = $affiliate->toArray();
-        session_start([
-            'cookie_lifetime' => 8640000,
-        ]);
-
-        $_SESSION['uid'] = $data['id'];
-        $_SESSION['aff_id'] = $data['thrivecart_affiliate_id'];
-        $_SESSION['email'] = $data['email'];
-        $_SESSION['fname'] = $data['first_name'];
-        $_SESSION['lname'] = $data['last_name'];
-
-        setcookie("AUTH_ID", $data['id'], time() + 8640000, "/");
+        $affiliate->loginNoPass();
 
         return redirect()->route('kkic');
     }

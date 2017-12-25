@@ -1,11 +1,38 @@
 @extends('layouts.app')
 
+@push('styles')
+<style>
+    h3 {
+        width:100%;
+        text-align:center;
+        border-bottom: 2px solid #000;
+        line-height:0.1em !important;
+        margin:10px 0 20px;
+    }
+    h3 span {
+        background:#fff;
+        padding:0 10px;
+    }
+
+    .panel-heading-link{
+        color:#333;
+    }
+    .panel-heading-link:hover{
+        text-decoration: none;
+    }
+</style>
+@endpush
+
 @section('content')
     <div class="container">
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
-                    <div class="panel-heading">Send Invite</div>
+                    <div class="panel-heading">
+                        <span>Send Invite</span>
+                        <a href="{{ route('invites', ['affiliateid'=> $data['aff_id'], 'coupon'=>'']) }}" class="panel-heading-link pull-right">View Invitations</a>
+                    </div>
+
 
                     <div class="panel-body">
                         @if (session('status'))
@@ -19,7 +46,8 @@
                                 <div class="alert alert-success">
                                     <strong>{{Session::get('message')}}</strong>
                                     <br>You can check your invitations by link:
-                                    <a href="{{ url('/kkic/invites') }}/{{Session::get('uid')}}">{{ url('/kkic/invites') }}/{{Session::get('uid')}}</a>
+                                    <a href="{{ route('invitation', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')])}}">{{ route('invitation', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')])}}</a>
+                                    <a href="{{-- route('invites', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')]) --}}">{{-- route('invites', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')]) --}}</a>
                                     <br>You have: {{Session::get('balance')}} invitation(s).
                                 </div>
 
@@ -42,48 +70,66 @@
 
                             {!! Form::model($affiliate,['action' => 'KkicController@store' , 'class' => 'form-horizontal form-label-left']) !!}
 
-                            <center><h3>Your Details</h3><br></center>
+                            <h3><span>Your Details</span></h3>
+                                <br>
 
-                            <div class="form-group">
-                                <label >Affiliate Id</label>
-                                {!! Form::text('affiliate_id',$data['aff_id'] ? $data['aff_id'] : rand(111111111,999999999),['required','class' => 'form-control']) !!}
-                            </div>
-                            <div class="form-group">
-                                <label >First Name</label>
-                                {!! Form::text('affiliate_fname',$data['fname'],['required','class' => 'form-control']) !!}
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" >Affiliate Id</label>
+                                    <div class="col-sm-10">
+                                        <input type="hidden" name="db_affiliate_id" value="{{$db_affiliate->id}}">
+                                        <input required="required"
+                                               name="affiliate_id"
+                                               @if(mb_strlen($data['aff_id']) > 0) readonly @endif
+                                               type="text"
+                                               value="{{$data['aff_id']}}"
+                                               class="form-control" >
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" >First Name</label>
+                                    <div class="col-sm-10">
+                                        {!! Form::text('affiliate_fname',$data['fname'],['required','class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" >Last Name</label>
+                                    <div class="col-sm-10">
+                                        {!! Form::text('affiliate_lname',$data['lname'],['required','class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" >Email</label>
+                                    <div class="col-sm-10">
+                                        {!! Form::email('affiliate_email',$data['email'],['required','readonly','class' => 'form-control']) !!}
+                                    </div>
+                                </div>
 
-                            </div>
-                            <div class="form-group">
-                                <label >Last Name</label>
-                                {!! Form::text('affiliate_lname',$data['lname'],['required','class' => 'form-control']) !!}
 
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                {!! Form::email('affiliate_email',$data['email'],['required','class' => 'form-control']) !!}
+                                <br>
+                                <h3><span>Your Friend</span></h3>
+                                <br><br>
 
-                            </div>
-
-
-                            <center><h3><br>Your Friend<br><br></h3></center>
-
-
-                            <div class="form-group">
-                                <label >First Name</label>
-                                {!! Form::text('friend_fname','',['required','class' => 'form-control']) !!}
-                            </div>
-                            <div class="form-group">
-                                <label >Last Name</label>
-                                {!! Form::text('friend_lname','',['required','class' => 'form-control']) !!}
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                {!! Form::email('friend_email','',['required','class' => 'form-control']) !!}
-                            </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" >First Name</label>
+                                    <div class="col-sm-10">
+                                        {!! Form::text('friend_fname','',['required','class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label" >Last Name</label>
+                                    <div class="col-sm-10">
+                                        {!! Form::text('friend_lname','',['required','class' => 'form-control']) !!}
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-sm-2 control-label">Email</label>
+                                    <div class="col-sm-10">
+                                        {!! Form::email('friend_email','',['required','class' => 'form-control']) !!}
+                                    </div>
+                                </div>
 
                             <center>
-                                <a class="btn btn-danger" href="{{ url('/') }}">Back</a>
-                                <button type="submit" class="btn btn-default">Send Invite</button>
+                                <button type="submit" class="btn btn-success">Send Invite</button>
                             </center>
 
                             </form>

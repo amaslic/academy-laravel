@@ -5,9 +5,12 @@ namespace App\Http\Controllers;
 use App\Affiliate;
 use App\Coupon;
 use App\Friend;
+use App\Invite;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 use App\Http\Requests\AddInvite;
+use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Mockery\Exception;
@@ -36,15 +39,24 @@ class KkicController extends Controller
         if (!$this->user && !isset($_COOKIE['AUTH_ID']) && empty($_COOKIE['AUTH_ID'])) die('Denied.');
 
         $data = [
-           'uid' => $_SESSION['uid'] ?? false,
-           'aff_id' => $_SESSION['aff_id'] ?? false,
-           'email' => $_SESSION['email'] ?? false,
-           'fname' => $_SESSION['fname'] ?? false,
-           'lname' => $_SESSION['lname'] ?? false,
+            'uid' => $_SESSION['uid'] ?? false,
+            'aff_id' => $_SESSION['aff_id'] ?? false,
+            'email' => $_SESSION['email'] ?? false,
+            'fname' => $_SESSION['fname'] ?? false,
+            'lname' => $_SESSION['lname'] ?? false,
         ];
+
+        session($data);
+
+        $affiliate = Affiliate::find($_SESSION['uid']);
+        if( ! is_null($affiliate)){
+            $data['fname'] = $affiliate->first_name;
+            $data['lname'] = $affiliate->last_name;
+        }
 
     	return view('kkic', [
     	    'affiliate' => new \App\Affiliate,
+    	    'db_affiliate' => $affiliate,
             'data' => $data,
         ]);
     }
@@ -52,7 +64,10 @@ class KkicController extends Controller
     public function store(AddInvite $request)
     {
         $this->validate($request, [
-            'affiliate_id' => 'required',
+            'affiliate_id' => [
+                'required',
+                Rule::unique('affiliates', 'thrivecart_affiliate_id')->ignore(request('db_affiliate_id'), 'id')
+            ],
             'affiliate_fname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
             'affiliate_lname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
             'affiliate_email' => 'required|email',
@@ -124,33 +139,50 @@ class KkicController extends Controller
             $coupon->save();
         }
 
-        Mail::send('emails.list', ['id' => $this->friend['id']], function($message)
+        Mail::send('emails.list', compact('affiliate', 'coupon'), function($message)
         {
-            $message->from('laravel@example.com', 'Invitation For '.$this->affiliate['fname'].' '.$this->affiliate['lname']);
-            $message->to($this->affiliate['email']);
+            $message->from($this->affiliate['email'], $this->affiliate['fname'].' '.$this->affiliate['lname']);
+            $message->to($this->friend['email'], $this->friend['fname'].' '.$this->friend['lname']);
         });
 
         return redirect()->route('kkic')
             ->with('message', 'Invite Sent Successfully!')
             ->with('uid', $affiliate->id)
+            ->with('coupon', $coupon->code)
             ->with('email', $affiliate->email)
             ->with('affid', $affiliate->thrivecart_affiliate_id)
             ->with('balance', $affiliate->invites_left);
 
     }
 
-    public function invites($id)
+    public function invites()
     {
-        $affiliate = (new Affiliate())->find($id);
+        $affiliate = null;
+        $friends = new Collection();
+
+        if (request()->has(['affiliateid'])) {
+            $affiliate = Affiliate::where('thrivecart_affiliate_id', request('affiliateid'))->first();
+        }
+
+        if( ! is_null($affiliate)){
+            $friends = $affiliate->friends()->get();
+        }
 
         return view('invites', [
-            'invites' => $affiliate ? $affiliate->friends()->get() : false,
+            'affiliate' => $affiliate,
+            'friends' => $friends,
         ]);
     }
 
-    public function invitation($id)
+    public function invitation()
     {
-        $whoami = (new Friend())->find($id);
+        $invite = Invite::where('coupon', request('coupon'))->first();
+
+        if(is_null($invite)){
+            throw new \Exception('Such invitation not found');
+        }
+
+        $whoami = (new Friend())->find($invite->friend_id);
 
         if(!$whoami) die('Denied.');
         $whoami = $whoami->toArray();
@@ -161,11 +193,18 @@ class KkicController extends Controller
         return view('emails.invite', [
             'affiliate' => $whoishe->toArray(),
             'friend' => $whoami,
+            'invite' => $invite,
         ]);
     }
 
     public function follow($id)
     {
+        $invite = Invite::find($id);
+
+        if(is_null($invite)){
+            throw new \Exception('Such invitation not found');
+        }
+
         $whoami = (new Friend())->find($id);
 
         if(!$whoami) die('Denied.');
@@ -177,12 +216,15 @@ class KkicController extends Controller
         return view('emails.follow', [
             'affiliate' => $whoishe->toArray(),
             'friend' => $whoami,
+            'invite' => $invite,
         ]);
     }
 
-    public function order($id)
+    public function order()
     {
-        $whoami = (new Friend())->find($id);
+        $invite = Invite::where('coupon', request('coupon'))->first();
+
+        $whoami = (new Friend())->find($invite->friend_id);
 
         if(!$whoami) die('Denied.');
         $whoami = $whoami->toArray();
