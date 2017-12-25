@@ -46,8 +46,8 @@
                                 <div class="alert alert-success">
                                     <strong>{{Session::get('message')}}</strong>
                                     <br>You can check your invitations by link:
-                                    <a href="{{ route('invites', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')]) }}">{{ route('invites', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')]) }}</a>
-                                    <!-- <a href="{{-- url('/kkic/invites') --}}/{{--Session::get('uid')--}}">{{-- url('/kkic/invites') --}}/{{--Session::get('uid')--}}</a> -->
+                                    <a href="{{ route('invitation', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')])}}">{{ route('invitation', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')])}}</a>
+                                    <a href="{{-- route('invites', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')]) --}}">{{-- route('invites', ['affiliateid'=> session('affid'), 'coupon'=>session('coupon')]) --}}</a>
                                     <br>You have: {{Session::get('balance')}} invitation(s).
                                 </div>
 

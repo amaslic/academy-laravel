@@ -14,7 +14,8 @@
         <p>{{ $affiliate['first_name'] }} gave you a $100 discount...You get in for only <strike><b>$297</b></strike> <b>$197</b>/month</p>
         <br>
         <center>
-            <a href="{{ route('order', ['affiliateid'=> $affiliate['thrivecart_affiliate_id'], 'coupon'=>$invite->coupon]) }}" style="text-decoration: none; background: green; font-size: 17px; padding: 22px 60px; color: white; display: inline-block;">I WANT IN!</a>&nbsp;&nbsp;
+            <a href="{{route('invitation', ['affiliateid'=> $affiliate['thrivecart_affiliate_id'], 'coupon'=>$invite->coupon])}}" style="text-decoration: none; background: green; font-size: 17px; padding: 22px 60px; color: white; display: inline-block;">I WANT IN!</a>&nbsp;&nbsp;
+            <!--<a href="{{-- route('order', ['affiliateid'=> $affiliate['thrivecart_affiliate_id'], 'coupon'=>$invite->coupon]) --}}" style="text-decoration: none; background: green; font-size: 17px; padding: 22px 60px; color: white; display: inline-block;">I WANT IN!</a>&nbsp;&nbsp;-->
             <a href="{{action('KkicController@follow', ['id'=>$friend['id']])}}" style="text-decoration: none; background: orange; font-size: 17px; padding: 22px 60px; color: white; display: inline-block;">I WANT MORE INFO...</a>
         </center>
     </div>
