@@ -24,7 +24,7 @@ Route::post('kkic', 'KkicController@store')->name('kkicstore');
 
 Route::get('kkic/invites', 'KkicController@invites')->name('invites');
 
-Route::get('kkic/invitation/{id}', 'KkicController@invitation')->name('invitation');
+Route::get('kkic/invitation', 'KkicController@invitation')->name('invitation');
 
 Route::get('kkic/follow/{id}', 'KkicController@follow')->name('follow');
 

@@ -138,7 +138,7 @@ class KkicController extends Controller
             $coupon->save();
         }
 
-        Mail::send('emails.list', ['id' => $this->friend['id']], function($message)
+        Mail::send('emails.list', compact('affiliate', 'coupon'), function($message)
         {
             $message->from($this->affiliate['email'], $this->affiliate['fname'].' '.$this->affiliate['lname']);
             $message->to($this->friend['email'], $this->friend['fname'].' '.$this->friend['lname']);
@@ -173,15 +173,15 @@ class KkicController extends Controller
         ]);
     }
 
-    public function invitation($id)
+    public function invitation()
     {
-        $invite = Invite::find($id);
+        $invite = Invite::where('coupon', request('coupon'))->first();
 
         if(is_null($invite)){
             throw new \Exception('Such invitation not found');
         }
 
-        $whoami = (new Friend())->find($id);
+        $whoami = (new Friend())->find($invite->friend_id);
 
         if(!$whoami) die('Denied.');
         $whoami = $whoami->toArray();

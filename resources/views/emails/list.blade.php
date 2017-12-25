@@ -28,7 +28,7 @@
                                     </div>
 
                                     <br><br>
-                                    <a href="{{ url('/kkic/invitation') }}/{{ $id }}" style="
+                                    <a href="{{ route('invitation', ['affiliateid'=> $affiliate->thrivecart_affiliate_id, 'coupon'=>$coupon->code])}}" style="
     background: green;
     color: white;
     padding: 10px 23px;
