@@ -56,6 +56,7 @@ class KkicController extends Controller
 
     	return view('kkic', [
     	    'affiliate' => new \App\Affiliate,
+    	    'db_affiliate' => $affiliate,
             'data' => $data,
         ]);
     }
@@ -65,7 +66,7 @@ class KkicController extends Controller
         $this->validate($request, [
             'affiliate_id' => [
                 'required',
-                Rule::unique('affiliates', 'thrivecart_affiliate_id')->ignore(session('uid'), 'id')
+                Rule::unique('affiliates', 'thrivecart_affiliate_id')->ignore(request('db_affiliate_id'), 'id')
             ],
             'affiliate_fname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',
             'affiliate_lname' => 'required|min:2|max:32|regex:/^[a-zA-Z][a-zA-Z0-9]+$/',

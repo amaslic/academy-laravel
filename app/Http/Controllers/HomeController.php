@@ -47,12 +47,20 @@ class HomeController extends Controller
     public function subscribe(SubscribeRequest $request){
         $email = $request->input('email');
 
-        $isEmailExist = Affiliate::where('email', strtolower($email))
-            ->exists();
+        $affiliate = Affiliate::where('email', strtolower($email))
+            ->first();
 
-        if($isEmailExist){
+        if( ! is_null($affiliate) && mb_strlen($affiliate->thrivecart_affiliate_id) > 0){
             return redirect()->action('NoPassAuthController@index', ['email'=>$email]);
-        }else{
+        }
+
+        if( ! is_null($affiliate) && mb_strlen($affiliate->thrivecart_affiliate_id) <= 0){
+            $affiliate->loginNoPass();
+
+            return redirect()->route('kkic');
+        }
+
+        if( is_null($affiliate)){
             $thrivecart_affiliate_id = '';
             //do{
             //    $thrivecart_affiliate_id = $this->strHelper->generateRandomString();

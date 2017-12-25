@@ -76,6 +76,7 @@
                                 <div class="form-group">
                                     <label class="col-sm-2 control-label" >Affiliate Id</label>
                                     <div class="col-sm-10">
+                                        <input type="hidden" name="db_affiliate_id" value="{{$db_affiliate->id}}">
                                         <input required="required"
                                                name="affiliate_id"
                                                @if(mb_strlen($data['aff_id']) > 0) readonly @endif
