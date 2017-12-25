@@ -36,7 +36,8 @@
 
                         <br><br>
                         <center>
-                            <a href="{{ route('order', ['affiliateid'=> $affiliate['thrivecart_affiliate_id'], 'coupon'=>$invite->coupon]) }}" style="text-decoration: none; background: green; font-size: 17px; padding: 22px 60px; color: white; display: inline-block;">I WANT IN!</a>&nbsp;&nbsp;
+                            <a href="https://{{$affiliate['thrivecart_affiliate_id']}}--test.thrivecart.com/kkic-raf/?coupon={{$invite->coupon}}" style="text-decoration: none; background: green; font-size: 17px; padding: 22px 60px; color: white; display: inline-block;">I WANT IN!</a>&nbsp;&nbsp;
+                            <!--<a href="{{-- route('order', ['affiliateid'=> $affiliate['thrivecart_affiliate_id'], 'coupon'=>$invite->coupon]) --}}" style="text-decoration: none; background: green; font-size: 17px; padding: 22px 60px; color: white; display: inline-block;">I WANT IN!</a>&nbsp;&nbsp;-->
                             <a href="#" style="text-decoration: none; background: orange; font-size: 17px; padding: 22px 60px; color: white; display: inline-block;">I'M NOT CONVINCED, PLEASE CALL ME</a>
                         </center>
                     </div>
